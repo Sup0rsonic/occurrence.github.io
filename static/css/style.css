@@ -1,0 +1,261 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: white;
+    color: #000;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+/* Center logo positioning */
+.logo-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.occurrence-logo {
+    width: 35vw;
+    max-width: 500px;
+    min-width: 280px;
+    height: auto;
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Bottom center logo */
+.logo-bottom-center {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.coom-logo {
+    max-width: 200px;
+    width: 40vw;
+    height: auto;
+    padding: 20px;
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Bottom left logo */
+.logo-bottom-left {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 5;
+}
+
+.felix-logo {
+    max-width: 150px;
+    width: 30vw;
+    height: auto;
+    padding: 20px;
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Background opacity for subtle effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('static/img/bg.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+body.dark-mode::before {
+    opacity: 0.05;
+    filter: invert(1);
+}
+
+/* Dark mode SVG inversion */
+body.dark-mode .coom-logo,
+body.dark-mode .felix-logo {
+    filter: invert(1);
+}
+
+/* Occurrence logo - selective inversion using CSS filters */
+body.dark-mode .occurrence-logo {
+    filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(0.9);
+}
+
+/* Hover effects */
+.occurrence-logo:hover {
+    transform: scale(1.05);
+}
+
+.coom-logo:hover,
+.felix-logo:hover {
+    transform: scale(1.1);
+}
+
+/* Loading animation - initial state */
+.logo-center,
+.logo-bottom-center,
+.logo-bottom-left {
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Specific animations for each logo to maintain positioning */
+.logo-center {
+    animation: fadeInCenter 0.8s ease forwards;
+}
+
+.logo-bottom-center {
+    animation: fadeInBottomCenter 0.8s ease forwards 0.2s;
+}
+
+.logo-bottom-left {
+    animation: fadeInBottomLeft 0.8s ease forwards 0.4s;
+}
+
+@keyframes fadeInCenter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes fadeInBottomCenter {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes fadeInBottomLeft {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .occurrence-logo {
+        width: 45vw;
+        max-width: 350px;
+        min-width: 250px;
+    }
+    
+    .coom-logo {
+        max-width: 150px;
+        width: 50vw;
+        padding: 15px;
+    }
+    
+    .felix-logo {
+        max-width: 120px;
+        width: 40vw;
+        padding: 15px;
+    }
+    
+    .logo-bottom-center {
+        bottom: 25px;
+    }
+    
+    .logo-bottom-left {
+        bottom: 25px;
+        left: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .occurrence-logo {
+        width: 55vw;
+        max-width: 280px;
+        min-width: 200px;
+    }
+    
+    .coom-logo {
+        max-width: 120px;
+        width: 60vw;
+        padding: 10px;
+    }
+    
+    .felix-logo {
+        max-width: 100px;
+        width: 50vw;
+        padding: 10px;
+    }
+    
+    .logo-bottom-center {
+        bottom: 20px;
+    }
+    
+    .logo-bottom-left {
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+/* Theme indicator */
+.theme-indicator {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+/* Smooth transitions for theme changes */
+body, .occurrence-logo, .coom-logo, .felix-logo {
+    transition: all 0.3s ease;
+}

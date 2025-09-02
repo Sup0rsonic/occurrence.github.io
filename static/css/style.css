@@ -30,7 +30,7 @@ body {
     z-index: 10;
 }
 
-.occurrence-logo {
+.ocurrence-new-logo {
     width: 35vw;
     max-width: 500px;
     min-width: 280px;
@@ -38,22 +38,7 @@ body {
     transition: filter 0.3s ease, transform 0.3s ease;
 }
 
-/* Bottom center logo */
-.logo-bottom-center {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-}
 
-.coom-logo {
-    max-width: 200px;
-    width: 40vw;
-    height: auto;
-    padding: 20px;
-    transition: filter 0.3s ease, transform 0.3s ease;
-}
 
 /* Bottom left logo */
 .logo-bottom-left {
@@ -77,52 +62,49 @@ body.dark-mode {
     color: #fff;
 }
 
-/* Background opacity for subtle effect */
+/* Background overlay - full screen */
 body::before {
     content: '';
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('static/img/bg.svg');
+    width: 100vw;
+    height: 100vh;
+    background-image: url('static/img/bg-new.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.1;
-    z-index: -1;
+    opacity: 1; /* 100% opacity - fully visible */
+    z-index: 0; /* Above base background but below character */
     transition: opacity 0.3s ease;
 }
 
 body.dark-mode::before {
-    opacity: 0.05;
+    opacity: 0.8; /* More visible in dark mode */
     filter: invert(1);
 }
 
 /* Dark mode SVG inversion */
-body.dark-mode .coom-logo,
 body.dark-mode .felix-logo {
     filter: invert(1);
 }
 
 /* Occurrence logo - selective inversion using CSS filters */
-body.dark-mode .occurrence-logo {
+body.dark-mode .ocurrence-new-logo {
     filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(0.9);
 }
 
 /* Hover effects */
-.occurrence-logo:hover {
+.ocurrence-new-logo:hover {
     transform: scale(1.05);
 }
 
-.coom-logo:hover,
 .felix-logo:hover {
     transform: scale(1.1);
 }
 
 /* Loading animation - initial state */
 .logo-center,
-.logo-bottom-center,
 .logo-bottom-left {
     opacity: 0;
 }
@@ -143,12 +125,8 @@ body.dark-mode .occurrence-logo {
     animation: fadeInCenter 0.8s ease forwards;
 }
 
-.logo-bottom-center {
-    animation: fadeInBottomCenter 0.8s ease forwards 0.2s;
-}
-
 .logo-bottom-left {
-    animation: fadeInBottomLeft 0.8s ease forwards 0.4s;
+    animation: fadeInBottomLeft 0.8s ease forwards 0.2s;
 }
 
 @keyframes fadeInCenter {
@@ -162,16 +140,7 @@ body.dark-mode .occurrence-logo {
     }
 }
 
-@keyframes fadeInBottomCenter {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%);
-    }
-}
+
 
 @keyframes fadeInBottomLeft {
     from {
@@ -186,16 +155,10 @@ body.dark-mode .occurrence-logo {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .occurrence-logo {
+    .ocurrence-new-logo {
         width: 45vw;
         max-width: 350px;
         min-width: 250px;
-    }
-    
-    .coom-logo {
-        max-width: 150px;
-        width: 50vw;
-        padding: 15px;
     }
     
     .felix-logo {
@@ -203,28 +166,20 @@ body.dark-mode .occurrence-logo {
         width: 40vw;
         padding: 15px;
     }
-    
-    .logo-bottom-center {
-        bottom: 25px;
-    }
-    
+
     .logo-bottom-left {
         bottom: 25px;
         left: 25px;
     }
+    
+
 }
 
 @media (max-width: 480px) {
-    .occurrence-logo {
+    .ocurrence-new-logo {
         width: 55vw;
         max-width: 280px;
         min-width: 200px;
-    }
-    
-    .coom-logo {
-        max-width: 120px;
-        width: 60vw;
-        padding: 10px;
     }
     
     .felix-logo {
@@ -232,15 +187,13 @@ body.dark-mode .occurrence-logo {
         width: 50vw;
         padding: 10px;
     }
-    
-    .logo-bottom-center {
-        bottom: 20px;
-    }
-    
+
     .logo-bottom-left {
         bottom: 20px;
         left: 20px;
     }
+    
+
 }
 
 /* Theme indicator */
@@ -256,6 +209,28 @@ body.dark-mode .occurrence-logo {
 }
 
 /* Smooth transitions for theme changes */
-body, .occurrence-logo, .coom-logo, .felix-logo {
+body, .ocurrence-new-logo, .felix-logo {
     transition: all 0.3s ease;
+}
+
+/* Full screen character positioning */
+.character-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Allow clicks to pass through to other elements */
+}
+
+.char-cropped {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* Fill entire screen */
+    object-position: center center;
+    transition: transform 0.3s ease;
 }

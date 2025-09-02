@@ -25,15 +25,15 @@ body {
 .logo-center {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 40%; /* Moved left from 50% */
     transform: translate(-50%, -50%);
     z-index: 10;
 }
 
 .ocurrence-new-logo {
-    width: 35vw;
-    max-width: 500px;
-    min-width: 280px;
+    width: 52.5vw; /* 1.5x larger: 35vw * 1.5 = 52.5vw */
+    max-width: 750px; /* 1.5x larger: 500px * 1.5 = 750px */
+    min-width: 420px; /* 1.5x larger: 280px * 1.5 = 420px */
     height: auto;
     transition: filter 0.3s ease, transform 0.3s ease;
 }
@@ -62,25 +62,22 @@ body.dark-mode {
     color: #fff;
 }
 
-/* Background overlay - full screen */
-body::before {
-    content: '';
+/* Background SVG - direct HTML element */
+.bg-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('static/img/bg-new.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 1; /* 100% opacity - fully visible */
+    object-fit: cover;
+    object-position: center;
     z-index: 0; /* Above base background but below character */
+    pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
-body.dark-mode::before {
-    opacity: 0.8; /* More visible in dark mode */
+body.dark-mode .bg-overlay {
+    opacity: 0.8;
     filter: invert(1);
 }
 
@@ -156,9 +153,9 @@ body.dark-mode .ocurrence-new-logo {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .ocurrence-new-logo {
-        width: 45vw;
-        max-width: 350px;
-        min-width: 250px;
+        width: 67.5vw; /* 1.5x larger: 45vw * 1.5 = 67.5vw */
+        max-width: 525px; /* 1.5x larger: 350px * 1.5 = 525px */
+        min-width: 375px; /* 1.5x larger: 250px * 1.5 = 375px */
     }
     
     .felix-logo {
@@ -177,9 +174,9 @@ body.dark-mode .ocurrence-new-logo {
 
 @media (max-width: 480px) {
     .ocurrence-new-logo {
-        width: 55vw;
-        max-width: 280px;
-        min-width: 200px;
+        width: 82.5vw; /* 1.5x larger: 55vw * 1.5 = 82.5vw */
+        max-width: 420px; /* 1.5x larger: 280px * 1.5 = 420px */
+        min-width: 300px; /* 1.5x larger: 200px * 1.5 = 300px */
     }
     
     .felix-logo {
@@ -213,24 +210,16 @@ body, .ocurrence-new-logo, .felix-logo {
     transition: all 0.3s ease;
 }
 
-/* Full screen character positioning */
-.character-fullscreen {
+/* Full screen character - direct positioning */
+.char-cropped {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none; /* Allow clicks to pass through to other elements */
-}
-
-.char-cropped {
-    width: 100vw;
+    right: 0;
+    width: auto;
     height: 100vh;
     object-fit: cover; /* Fill entire screen */
-    object-position: center center;
+    object-position: right center; /* Align to right side */
+    z-index: 1;
+    pointer-events: none; /* Allow clicks to pass through to other elements */
     transition: transform 0.3s ease;
 }

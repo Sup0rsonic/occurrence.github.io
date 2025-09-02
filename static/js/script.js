@@ -129,6 +129,61 @@ document.addEventListener('click', function(e) {
     }
 });
 
+// Smooth mouse parallax effect with proper caching
+let parallaxElements = {};
+let rafId = null;
+let mouseX = 0.5;
+let mouseY = 0.5;
+
+// Initialize parallax elements
+document.addEventListener('DOMContentLoaded', function() {
+    parallaxElements = {
+        logoCenter: document.querySelector('.logo-center'),
+        logoBottomLeft: document.querySelector('.logo-bottom-left'),
+        bgOverlay: document.querySelector('.bg-overlay'),
+        charCropped: document.querySelector('.char-cropped')
+    };
+});
+
+// Mouse movement handler
+document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX / window.innerWidth;
+    mouseY = e.clientY / window.innerHeight;
+    
+    // Cancel previous animation frame if it exists
+    if (rafId) {
+        cancelAnimationFrame(rafId);
+    }
+    
+    // Schedule new animation frame
+    rafId = requestAnimationFrame(updateParallax);
+});
+
+function updateParallax() {
+    // Calculate movement amounts (max 100px in any direction for fast, dramatic effect)
+    const moveX = (mouseX - 0.5) * 200;
+    const moveY = (mouseY - 0.5) * 200;
+    
+    // Apply parallax with different intensities
+    if (parallaxElements.logoCenter) {
+        parallaxElements.logoCenter.style.transform = `translate(calc(-50% + ${moveX * 1.8}px), calc(-50% + ${moveY * 1.8}px))`;
+    }
+    
+    if (parallaxElements.logoBottomLeft) {
+        parallaxElements.logoBottomLeft.style.transform = `translate(${moveX * 0.5}px, ${moveY * 0.5}px)`;
+    }
+    
+    if (parallaxElements.bgOverlay) {
+        parallaxElements.bgOverlay.style.transform = `translate(${moveX * 0.2}px, ${moveY * 0.2}px)`;
+    }
+    
+    if (parallaxElements.charCropped) {
+        parallaxElements.charCropped.style.transform = `translate(${moveX * 0.4}px, ${moveY * 0.4}px)`;
+    }
+    
+    rafId = null;
+}
+
 // Performance monitoring
 window.addEventListener('load', function() {
     const loadTime = performance.now();
